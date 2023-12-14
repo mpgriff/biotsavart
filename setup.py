@@ -8,7 +8,7 @@ setup(
     package_dir={'':'src'},
     install_requires=['numpy', 'matplotlib'],
     version=__version__,
-    license='MIT?',
+    license='MIT',
     description='generate magnetic fields in free space using biot savart laws',
     python_requires=">=3.8",
 )
