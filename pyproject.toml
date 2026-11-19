@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "biotsavartlaw"
+version = "0.1.0"
+description = "generate magnetic fields in free space using biot savart law"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Matthew P. Griffiths", email = "mpg@geo.au.dk" }]
+requires-python = ">=3.8"
+dependencies = ["numpy", "matplotlib"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+
+[project.urls]
+Homepage = "https://github.com/mpgriff/biotsavart"
+Source = "https://github.com/mpgriff/biotsavart"
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.setuptools]
+py-modules = ["biotsavart"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
