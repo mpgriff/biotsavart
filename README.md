@@ -41,7 +41,7 @@ B = calc_bfield(loop.xyz, obs.xyz, I=10.0)  # tesla, shape (101, 101, 3)
 Bx, By, Bz = B[..., 0], B[..., 1], B[..., 2]
 ```
 
-Check: the field at the centre of a square loop of side $a$ is $2\sqrt2\,\mu_0 I/(\pi a)$.
+Check: the field at the centre of a square loop of side $a$ is $2\sqrt{2} \mu_0 I/(\pi a)$.
 
 ```python
 >>> calc_bfield(loop.xyz, np.zeros(3), I=1.0)[2]
@@ -78,7 +78,9 @@ For a straight segment, the Biot–Savart integral has a simple closed form in a
 the observation point at the origin and the wire parallel to the $x$-axis, from $x_1$ to $x_2$, at
 height $y=d$ in the $z=0$ plane. There the field points purely along $z$:
 
-$$B_z = -\operatorname{sign}(d)\,\frac{\mu_0 I}{4\pi |d|}\left(\frac{x_2}{\sqrt{x_2^2+d^2}}-\frac{x_1}{\sqrt{x_1^2+d^2}}\right).$$
+```math
+B_z = -\mathrm{sign}(d)\,\frac{\mu_0 I}{4\pi |d|}\left(\frac{x_2}{\sqrt{x_2^2+d^2}}-\frac{x_1}{\sqrt{x_1^2+d^2}}\right)
+```
 
 `bfield_from_line` moves every (segment, observation point) pair into that frame and back:
 
@@ -87,11 +89,11 @@ $$B_z = -\operatorname{sign}(d)\,\frac{\mu_0 I}{4\pi |d|}\left(\frac{x_2}{\sqrt{
 2. **Find the plane** through the origin, $\vec p$ and $\vec q$. Its unit normal is
    $\hat n = \vec p\times\vec q/|\vec p\times\vec q|$, flipped if needed so that $n_z \ge 0$.
 3. **Rotate that plane onto $z=0$** (`getR`). The rotation is a half-turn about the bisector of
-   $\hat n$ and $\hat z$, $R = 2\,\hat a\hat a^{\mathsf T}-\mathbb 1$ with $\hat a = (\hat n+\hat z)/|\hat n+\hat z|$.
+   $\hat n$ and $\hat z$, $R = 2 \hat a \hat a^{\mathsf T}-\mathbb{1}$ with $\hat a = (\hat n+\hat z)/|\hat n+\hat z|$.
    It swaps $\hat n$ and $\hat z$, and it is symmetric and its own inverse.
 4. **Rotate about $z$** (`getRz`) so the segment points along $+x$. The segment's $y$ coordinate is
    now the perpendicular distance $d$.
-5. **Evaluate** the closed form above and **rotate back**: $\vec B = R\,R_z^{\mathsf T}\,\vec B''$.
+5. **Evaluate** the closed form above and **rotate back**: $\vec B = R R_z^{\mathsf T} \vec B''$.
    The field is therefore always parallel to $\hat n$.
 
 `calc_bfield` repeats this for each segment, vectorised over all observation points, and sums
